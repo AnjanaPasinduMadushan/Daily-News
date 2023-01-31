@@ -1,6 +1,12 @@
+import HomePosts from "./homePosts"
+
+
 const Home = () => {
     return (
-      <div>Home</div>
+      <>
+      <HomePosts/>
+      </>
+      
     )
   }
   
