@@ -5,23 +5,28 @@ import {useSelector, useDispatch} from 'react-redux'
 import { fetchPosts } from '../../store/utils/thunks'
 import Masonry from 'react-masonry-css'
 import Moment from 'react-moment';
-import {Button} from 'react-bootstrap'
+import {Button, Spinner} from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
 
 const HomePosts = () => {
 
-    const HomePosts = useSelector((state)=>state.posts)
+    const homePosts = useSelector((state)=>state.posts)
 
     
     const dispatch = useDispatch();
 
     useEffect(()=>{
       
-      if(HomePosts.articles.items.length <= 0){
-        dispatch(fetchPosts({page:1, order:"desc", limit:6}))
+      if(homePosts.articles.items.length <= 0){
+        dispatch(fetchPosts({page:1, order:"asc", limit:6}))
       }
         
     },[])
+
+    const loadMoreposts = () => {
+      const page = homePosts.articles.page + 1;
+      dispatch(fetchPosts({page, order:"asc", limit:6}))
+    }
 
   return (
    <>
@@ -30,8 +35,8 @@ const HomePosts = () => {
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column"
             >
-            { HomePosts.articles ? 
-                HomePosts.articles.items.map((item)=>(
+            { homePosts.articles ? 
+                homePosts.articles.items.map((item)=>(
                   <div key={item.id}>
                     <img
                       style={{width:'100%', height:'100%'}}
@@ -42,7 +47,7 @@ const HomePosts = () => {
                       <span>{item.author} - </span>
                       <Moment format='DD MMMM'>{item.createdAt}</Moment>
                     </div>
-                    <div lassName='content'>
+                    <div className='content'>
                       <div className='title'>{item.title}</div>
                       <div className='excerpt'>{item.excerpt}</div>
                       <LinkContainer to={`/article/${item.id}`} className="mt-3">
@@ -55,6 +60,21 @@ const HomePosts = () => {
               : null
             }
     </Masonry>
+
+    {homePosts.loading ?
+        <div style={{textAlign:'center'}}>
+          <Spinner animation = 'border' role = 'status'>
+              <span className='visually-hidden'>Loading...</span>
+          </Spinner>
+
+        </div>
+    : null}
+
+    { !homePosts.articles.end && !homePosts.loading ?
+      <Button variant='outline-dark' onClick={()=>loadMoreposts()}>
+          Load more Posts
+      </Button>
+    :null }
    </>
   )
 }
