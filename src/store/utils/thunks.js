@@ -25,3 +25,18 @@ export const fetchPosts = createAsyncThunk(
      }
 
 )
+
+export const fetchPostById = createAsyncThunk(
+    'posts/fetchPostsById',
+
+    async(id)=>{
+        try{
+
+            const response = await  axios.get(`${URL_SERV}/posts/${id}`)
+            return response.data
+            
+        }catch(err){
+            throw err
+        }
+    }
+)
