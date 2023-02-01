@@ -1,10 +1,11 @@
 import HomePosts from "./homePosts"
-
+import NewsLetter from "../utils/newsLetter"
 
 const Home = () => {
     return (
       <>
       <HomePosts/>
+      <NewsLetter/>
       </>
       
     )
