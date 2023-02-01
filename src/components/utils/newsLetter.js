@@ -4,7 +4,9 @@ import {Form, Button} from 'react-bootstrap'
 import {useDispatch} from 'react-redux'
 
 import { addToNewsletter } from '../../store/utils/thunks'
-import {showToast} from './tools'
+import { showToast } from './tools'
+
+import { ToastContainer } from 'react-toastify'; 
 
 
 const NewsLetter = () => {
@@ -61,6 +63,7 @@ const NewsLetter = () => {
 
         </div>
     </div>
+    <ToastContainer/>
     </>
   )
 }
