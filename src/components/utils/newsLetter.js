@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, {useRef, useEffect} from 'react'
 import {Form, Button} from 'react-bootstrap'
 
 import {useDispatch} from 'react-redux'
@@ -7,13 +7,15 @@ import { addToNewsletter } from '../../store/utils/thunks'
 import { showToast } from './tools'
 
 import { ToastContainer } from 'react-toastify'; 
-
+import { clearNewsLetter } from '../../store/reducers/users'
 
 const NewsLetter = () => {
 
   const textInput = useRef();
     const dispatch = useDispatch();
 
+
+    
 
   const handleSubmit = (e) =>{
     e.preventDefault();
@@ -36,9 +38,12 @@ const NewsLetter = () => {
         textInput.current.value = '';
 
       }
+      dispatch(clearNewsLetter())
     })
 
   }
+
+
 
   return (
     <>

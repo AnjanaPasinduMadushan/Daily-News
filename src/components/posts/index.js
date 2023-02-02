@@ -6,6 +6,10 @@ import { fetchPostById } from '../../store/utils/thunks';
 
 import { Spinner} from 'react-bootstrap'
 
+import { clearPostById } from '../../store/reducers/posts';
+
+import NewsLetter from '../utils/newsLetter';
+
 
 const Postcomponent = () => {
 
@@ -18,6 +22,15 @@ const Postcomponent = () => {
   useEffect(()=>{
       dispatch(fetchPostById(params.id))
   }, [])
+
+
+  useEffect(()=>{
+    return()=>{
+        dispatch(clearPostById())
+    }
+},[])
+
+
 
   return (
     <>
@@ -61,6 +74,8 @@ const Postcomponent = () => {
 
         </div>
     : null}
+
+    <NewsLetter/>
     </>
   )
 }
