@@ -1,0 +1,4 @@
+to run db.json
+
+
+npm run jserv
